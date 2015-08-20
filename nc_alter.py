@@ -55,6 +55,30 @@ def client_sender(buffer):
 		print "[*] Exception! Exiting."
 		client.close()
 
+def server_loop():
+	global target
+
+	if not len(target):
+		target = "0.0.0.0"
+
+	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	server.bind((target,port))
+	server.listen(5)
+
+	while True:
+		client_socket, addr = server.accept()
+		client_thread = threading.Thread(target=client_handler, args=(client_socket,))
+		client_thread.start()
+
+def run_command(command):
+	command = command.rstrip()
+
+	try:
+		output = subprocess.check_output(command,stderr=subprocess.STDOUT, shell=True)
+	except:
+		output = "Failed to execute command.\r\n"
+	return output
+
 def main():
 	global listen
 	global port
