@@ -29,7 +29,7 @@ def usage():
 	sys.exit(0)	
 
 def client_sender(buffer):
-	client = socket.socket(socket.AF_INET, scoket.SOCK_STREAM)
+	client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 	try:
 		client.connect((target,port))
@@ -157,4 +157,3 @@ def main():
 	if listen:
 		server_loop()
 main()
-
